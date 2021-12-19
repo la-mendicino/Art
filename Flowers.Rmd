@@ -1,0 +1,143 @@
+---
+title: "Flowers"
+author: "Lucas Mendicino"
+date: "12/19/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r}
+# Set plot images to a nice size
+options(repr.plot.width = 4, repr.plot.height = 4)
+
+# Load the ggplot2 package
+library(ggplot2)
+```
+
+
+We'll start by drawing 50 points on a circle of radius 1. As every (x, y) point should be in the unit circle, it follows that x² + y² = 1. We can get this using the super famous Pythagorean trigonometric identity which states that sin²(θ) + cos²(θ) = 1 for any real number θ.
+```{r}
+
+# Create circle data to plot
+t <- seq(0, 2*pi, length.out = 50)
+x <- sin(t)
+y <- cos(t)
+df <- data.frame(t, x, y)
+
+# Make a scatter plot of points in a circle
+p <- ggplot(df, aes(x, y))
+p + geom_point()
+```
+
+Plants arrange their leaves in spirals. A spiral is a curve which starts from the origin and moves away from the origin as it revolves around it. In the plot above all our points are the same distance from the origin. A simple way to arrange them in a spiral is to multiply x and y by a factor which increases for each point. We could use t as that factor, as it meets these conditions, but we will do something more harmonious. We will use the Golden Angle:
+
+Golden Angle = π(3 − √5)
+
+This number is inspired by the Golden Ratio, one of the most famous numbers in the history of mathematics. Imagine that you have a circumference and you break up it into two arcs with lengths a and b, with a>b (an arc is a portion of the circumference). The angle that breaks the circle so that a/b=(a+b)/a is called the Golden Angle. In other words: the Golden Angle breaks up a circle so that the ratio of the big arc to the little arc is the Golden Ratio. 
+
+```{r}
+# Define the number of points
+points <- 500
+
+# Define the Golden Angle
+angle <- pi*(3 - sqrt(5))
+
+t <- (1:points) * angle
+x <- sin(t)
+y <-cos(t)
+df <- data.frame(t, x, y)
+
+# Make a scatter plot of points in a spiral
+p <- ggplot(df, aes(x*t, y*t))
+p + geom_point()
+```
+Let's change the size, transparency, and color of the points
+```{r}
+p <- ggplot(df, aes(x*t, y*t))
+p + geom_point(size = 8, alpha = 0.5, color = "darkgreen")
+```
+
+Let's change the size, transparency, and color of the points againa
+
+```{r}
+p <- ggplot(df, aes(x*t, y*t))
+p + geom_point(aes(size=t), alpha=0.5, shape=8)+
+  theme(legend.position="none",
+        panel.background = element_rect(fill="white"),
+        panel.grid=element_blank(),
+        axis.ticks=element_blank(),
+        axis.title=element_blank(),
+        axis.text=element_blank())
+```
+Let's change the size, transparency, color, and background 
+```{r}
+# Copy the code from Task 6 and modify the color and
+# shape of the points, and the background color
+p <- ggplot(df, aes(x*t, y*t))
+p + geom_point(aes(size=t), alpha=0.5, shape=17, color="yellow")+
+  theme(legend.position="none",
+        panel.background = element_rect(fill="darkmagenta"),
+        panel.grid=element_blank(),
+        axis.ticks=element_blank(),
+        axis.title=element_blank(),
+        axis.text=element_blank())
+```
+
+
+```{r}
+# Change the value of the angle
+angle <- 2
+points <- 1000
+
+t <- (1:points)*angle
+x <- sin(t)
+y <- cos(t)
+df <- data.frame(t, x, y)
+
+# Copy the plotting code from Task 7
+p <- ggplot(df, aes(x*t, y*t))
+p + geom_point(aes(size=t), alpha=0.5, shape=17, color="yellow")+
+  theme(legend.position="none",
+        panel.background = element_rect(fill="darkmagenta"),
+        panel.grid=element_blank(),
+        axis.ticks=element_blank(),
+        axis.title=element_blank(),
+        axis.text=element_blank())
+```
+
+```{r}
+# Change the values of angle and points
+angle <- 13*pi/180
+points <- 2000
+
+t <- (1:points)*angle
+x <- sin(t)
+y <- cos(t)
+df <- data.frame(t, x, y)
+
+# Adjust the plot parameters to create the magenta flower
+p <- ggplot(df, aes(x*t, y*t))
+p + geom_point(size=80, alpha=0.1, shape = 1, color="magenta4")+ 
+  theme(legend.position="none",
+        panel.background = element_rect(fill="white"),
+        panel.grid=element_blank(),
+        axis.ticks=element_blank(),
+        axis.title=element_blank(),
+        axis.text=element_blank())
+```
+
+
+
+
+
+
+
+
+
+
+
+
